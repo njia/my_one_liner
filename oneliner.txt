@@ -1,0 +1,40 @@
+# Some one liners I found useful for ever day system admin work.
+
+
+# quick count total number of lines in a single or multiple files
+perl -lne 'END {print $. }'  # file name, a.txt or *.txt or, a.txt b.txt etc etc
+
+# quickly get the sum value of first field, change 0 to match the actual field
+perl -lane '$total += $F[0]; END {print $total}'
+
+# quickly calculat the average value of a field
+perl -lane '$total += $F[0]; END {printf "%12.2f\n", $total/$. if $.}'
+
+# Identify text files under /usr/bin
+perl -le 'for(@ARGV) {print if -f and -T}' /usr/bin/*
+
+# sort squid access log on 2nd filed(total session times) and convert time to localtime
+sort -rn -k 2,2 access.log | perl -lpe 's/^([0-9]{10})(.\d{3})/scalar localtime$1/e'
+
+#generate a string with 5 random characters(word characters)
+perl -le 'print map { ("a".."z")[rand 26] } 1..5'
+
+#generate a 12 digit password with upper/lower case letters and numbers
+perl -le 'print map{ (("a".."z"),("A".."Z"),(0..9))[rand 62]} 1..12'
+
+#count top 5 most used words(words only) in a file
+cat "file" | tr -cs A-Za-z '\n' | tr A-Z a-z | uniq -c | sort -rn | head -5
+
+#Print last line of file
+perl -lne 'print if elf' filename
+perl -lane 'END {print joine " ", @F}' filename
+
+sed -n '$p' filename
+
+
+#Print last word of file
+perl -lane 'END {print $F[-1]}' filename
+
+#Print first line of file
+perl -lne 'print;exit' filename
+perl -lne 'print if $. == 1; exit' filename
