@@ -26,11 +26,9 @@ perl -le 'print map{ (("a".."z"),("A".."Z"),(0..9))[rand 62]} 1..12'
 cat "file" | tr -cs A-Za-z '\n' | tr A-Z a-z | uniq -c | sort -rn | head -5
 
 #Print last line of file
-perl -lne 'print if elf' filename
-perl -lane 'END {print joine " ", @F}' filename
-
+perl -lne 'print if eof' filename
+perl -lane 'END {print join " ", @F}' filename
 sed -n '$p' filename
-
 
 #Print last word of file
 perl -lane 'END {print $F[-1]}' filename
